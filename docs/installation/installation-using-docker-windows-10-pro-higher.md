@@ -1,5 +1,7 @@
 # Installation Using Docker for Windows 10 Pro and higher
 
+**Expected installation time:** 3 hours.
+
 This solution uses [*docker-sync*](http://docker-sync.io/) (for fast two-way synchronization of the application files between the host machine and Docker volume).
 
 ## Supported systems
