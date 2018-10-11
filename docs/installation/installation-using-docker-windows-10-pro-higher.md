@@ -1,5 +1,6 @@
 # Installation Using Docker for Windows 10 Pro and higher
-*Virtualization technology (e.g. Docker, Vagrant) is generally significantly slower on Windows than on UNIX operating systems. Running Shopsys Framework on Windows via Docker can cause performance issues such as page load taking a several seconds (~20s on Windows with 4GB RAM and Intel i5; ~0,5s on Linux or Mac OS). We are still trying to improve this situation so please stay tuned.*
+
+This solution uses [*docker-sync*](http://docker-sync.io/) (for fast two-way synchronization of the application files between the host machine and Docker volume).
 
 ## Supported systems
 - Windows 10 Pro
@@ -10,10 +11,11 @@
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [PHP](http://php.net/manual/en/install.windows.php)
 * [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
+    * Docker for Windows requires at least 4 GB of memory, otherwise, `composer install` can result in `Killed` status (we recommend to set 2 GB RAM, 1 CPU and 2 GB Swap in `Docker -> Preferences… -> Advanced`) 
 
 ## Docker-sync for Windows
 
-* In settings of Windows docker check `Expose daemon on localhost:2375` and check drive option in `Shared Drives` tab, where the project will be installed.
+* In settings of Windows docker check `Expose daemon on localhost:2375` and check drive option in `Shared Drives` tab, where the project will be installed, you will be prompted for your Windows credentials.
 * Enable WSL - Open the `Windows Control Panel`, `Programs and Features`, click on the left on `Turn Windows features on or off` and check `Windows Subsystem for Linux` near the bottom, restart of Windows is required.
 * Install `Debian` app form `Microsoft Store` and launch it, so console window is opened.
 * Execute following commands in console window.
@@ -127,14 +129,7 @@ This token can be generated on [Github -> Settings -> Developer Settings -> Pers
 Save your token into the `docker-compose.yml` file.
 Token is located in `services -> php-fpm -> build -> args -> github_oauth_token`.
 
-### 3. Grant Docker access to your files
-- Right click Docker icon in your system tray and choose `Settings...`
-- From left menu choose `Shared Drives`
-- Set your system drive including Shopsys Framework repository as `Shared` (check the checkbox)
-- Click on `Apply`
-- You will be prompted for your Windows credentials
-
-### 4. Compose Docker container
+### 3. Compose Docker container
 On Windows you need to synchronize folders using docker-sync.
 Before starting synchronization you need to create a directory for persisting Vendor data so you won't lose it when the container is shut down.
 ```
